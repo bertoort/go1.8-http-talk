@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Closed Websocket</title>
+		<script src="jquery-2.1.4.min.js"></script>
+		<script>
+      $(function() {
+        var ws = new WebSocket('ws://localhost:8000/echo');
+        var $ul = $('ul');
+
+        ws.onmessage = function() {
+          console.log("Server:" + event.data);
+          $('<li>').text(event.data).appendTo($ul);
+        };
+
+        $('form').submit(function(){
+          event.preventDefault();
+          var data = $('input[type=text]').val();
+          $('input[type=text]').val('');
+          console.log("Client:" + data);
+          ws.send(data);
+        });
+      });
+		</script>
+	</head>
+	<body>
+      <form>
+			  <input type="text" />
+			  <input type="submit" value="send"/>
+      </form>
+      <ul></ul>
+	</body>
+</html>

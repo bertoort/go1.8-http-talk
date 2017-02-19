@@ -19,7 +19,7 @@ func main() {
 	port := ":8000"
 
 	mux.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(5 * time.Second)
+		time.Sleep(8 * time.Second)
 		w.Write([]byte("Finished!\n"))
 	}))
 
@@ -35,10 +35,7 @@ func main() {
 
 	<-stopChan // wait for SIGINT
 	log.Println("Shutting down server...")
-
-	// shut down gracefully, but wait no longer than 5 seconds before halting
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	// srv.Shutdown(context.Background())
 	srv.Shutdown(ctx)
 
 	log.Println("gracefully stopped stopped")

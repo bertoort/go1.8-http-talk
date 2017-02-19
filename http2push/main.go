@@ -3,7 +3,7 @@ package main
 import "net/http"
 
 func main() {
-
+	port := ":8000"
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +43,6 @@ func main() {
 
 	}))
 
-	http.ListenAndServeTLS(":4430", "cert.pem", "key.pem", nil)
+	http.ListenAndServeTLS(port, "cert.pem", "key.pem", nil)
 
 }
